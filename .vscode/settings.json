@@ -1,0 +1,9 @@
+{
+  "editor.formatOnSave": false,
+  "prettier.singleQuote": true,
+  "editor.defaultFormatter": "dbaeumer.vscode-eslint",
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": "explicit"
+  },
+  "eslint.workingDirectories": [{ "mode": "auto" }],
+}
