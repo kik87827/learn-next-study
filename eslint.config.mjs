@@ -1,6 +1,9 @@
 import { dirname } from 'path';
 import { fileURLToPath } from 'url';
 import { FlatCompat } from '@eslint/eslintrc';
+import eslintPluginPrettier from 'eslint-plugin-prettier';
+import eslintPluginReact from 'eslint-plugin-react';
+import eslintPluginReactHooks from 'eslint-plugin-react-hooks';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -11,11 +14,21 @@ const compat = new FlatCompat({
 
 const eslintConfig = [
 	...compat.extends('next/core-web-vitals'),
-	...compat.config({
-		extends: ['plugin:prettier/recommended'], // .eslintrc.js의 설정을 직접 가져옴
-		plugins: ['prettier'],
+	{
+		files: ['pages/_app.jsx', '**/*.js', '**/*.jsx', '**/*.ts', '**/*.tsx'],
+		languageOptions: {
+			ecmaVersion: 'latest',
+			sourceType: 'module',
+			parserOptions: {
+				ecmaFeatures: { jsx: true },
+			},
+		},
+		plugins: {
+			prettier: eslintPluginPrettier,
+			react: eslintPluginReact,
+			'react-hooks': eslintPluginReactHooks,
+		},
 		rules: {
-			'no-undef': 'error',
 			'prettier/prettier': [
 				'error',
 				{
@@ -29,9 +42,10 @@ const eslintConfig = [
 					arrowParens: 'avoid',
 				},
 			],
-			'no-const-assign': 'error', // const 재할당 금지
+			'no-undef': 'error',
+			'no-const-assign': 'error',
 		},
-	}),
+	},
 ];
 
 export default eslintConfig;
